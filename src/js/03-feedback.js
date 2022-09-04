@@ -62,3 +62,14 @@ function populateText() {
     };
 
 }
+
+
+
+/**
+ * function writeInput() {
+  const formData = {};
+  formData[findInput.name] = findInput.value;
+  formData[findText.name] = findText.value;
+  localStorage.setItem(SAVE_KEY, JSON.stringify(formData));
+}
+ */
