@@ -4,20 +4,30 @@ const LOCALSTORAGE_KEY = "feedback-form-state";
 
 const refs = {
     form: document.querySelector('.feedback-form'),
-    textarea: document.querySelector('.feedback-form textarea')
+    textarea: document.querySelector('.feedback-form textarea'),
+    input: document.querySelector('.feedback-form input'),
 };
 
 refs.form.addEventListener('input', throttle(onFormInput, 500));
 refs.form.addEventListener('submit', onFormSubmit);
 
-const formData = {};
+let formData = {
+    // email: '',
+    // message:''
+};
+// let savedInputData = '';
 
 populateText();
 
 function onFormInput(evt) {
-    evt.preventDefault();
+    // evt.preventDefault();
+
+    if (evt.target.value) {
+        formData[evt.target.name] = evt.target.value;
+    }
     formData[evt.target.name] = evt.target.value;
     // console.log(evt.target.name);
+    // console.log('formData: ', formData);
     // console.log(evt.target.value);
 
     localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(formData));
@@ -34,6 +44,7 @@ function onFormSubmit(evt) {
     evt.currentTarget.reset();
     console.log(formData);
     localStorage.removeItem(LOCALSTORAGE_KEY);
+    formData = {};
 }
 
 function populateText() {
@@ -42,7 +53,12 @@ function populateText() {
     // console.log(refs.form.email.value);
 
     if (savedInputData) {
-        refs.form.email.value = savedInputData.email;
-        refs.form.message.value = savedInputData.message;
-    }
+        // refs.form.email.value = savedInputData.email || '';
+        // refs.form.message.value = savedInputData.message || '';
+        refs.input.value = !!savedInputData.email ? savedInputData.email : '';
+        refs.textarea.value = !!savedInputData.message ? savedInputData.message : '';
+        formData = savedInputData;
+
+    };
+
 }
