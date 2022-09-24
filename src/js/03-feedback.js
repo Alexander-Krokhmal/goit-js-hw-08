@@ -46,9 +46,20 @@ function onFormSubmit(evt) {
     localStorage.removeItem(LOCALSTORAGE_KEY);
     formData = {};
 }
-
+/**Получаем значение из хранилища, 
+    если что-то біло - обновляем DOM
+*/
 function populateText() {
-    const savedInputData = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+    let savedInputData = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+
+/**  Избавление от глобальной переменной:
+ * 
+    let savedInputData = localStorage.getItem(LOCALSTORAGE_KEY);
+    savedInputData = savedInputData ? JSON.parse(savedInputData) : {};
+    savedInputData[evt.target.name] = evt.target.value;
+    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(savedInputData));
+ */
+
     // console.log(savedInputData.email);
     // console.log(refs.form.email.value);
 
@@ -58,7 +69,6 @@ function populateText() {
         refs.input.value = !!savedInputData.email ? savedInputData.email : '';
         refs.textarea.value = !!savedInputData.message ? savedInputData.message : '';
         formData = savedInputData;
-
     };
 
 }
